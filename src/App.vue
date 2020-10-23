@@ -2,10 +2,10 @@
   <v-app>
    <Navbar/>
 
-   <v-content>
+   <v-main>
      
    <router-view></router-view>
-   </v-content>
+   </v-main>
 
 
   </v-app>

@@ -3,7 +3,7 @@
     <v-container>
       <v-row class="height-30">
         <v-col>
-          <div class="d-flex justify-content-end mb-5">
+          <div class="d-flex justify-content-end">
             <v-btn class="text-capitalize text text-color white--text mr-4">
               Resend Invitation
               <v-icon class="ml-2">mdi-email</v-icon>
@@ -17,7 +17,9 @@
       </v-row>
       <v-row>
         <v-col sm="4">
-          <v-icon class="float-right mr-5">mdi-pencil-circle</v-icon>
+          <div class="float-right mr-5">
+            <modal/>
+          </div>
           <div class="d-flex">
             <div>
               <v-img src="@/assets/photo.svg" width="75px"></v-img>
@@ -27,17 +29,17 @@
           </div>
 
           <div>
-            <div class="table-text my-7">
+            <div class="table-text mt-5">
               <v-icon color="#5064CC" size="30" class="mr-2">mdi-email</v-icon>
               Moshood@brandmobileafrica.com
             </div>
 
-            <div class="table-text my-7">
+            <div class="table-text mt-5">
               <v-icon color="#5064CC" size="30" class="mr-2">mdi-phone</v-icon>
               +234 818 655 1442
             </div>
 
-            <div class="table-text my-7 d-flex">
+            <div class="table-text mt-5 d-flex">
               <v-icon color="#5064CC" size="30" class="mr-2"
                 >mdi-map-marker</v-icon
               >
@@ -47,10 +49,55 @@
               </p>
             </div>
 
-            <div class="my-7 d-flex">
+            <div class="mt-5 d-flex" v-if="is_changePwd" @click="changePwd()">
               <v-icon color="#5064CC" size="30" class="mr-2">mdi-lock</v-icon>
-              <p class="pwd mb-0 mt-3">Change Password</p>
+              <v-btn depressed color="#EDF0F0" class="pwd text-capitalize pt-2"
+                >Change Password</v-btn
+              >
             </div>
+
+            <v-form :class="{ 'd-none': is_changePwd }">
+              <div class="d-flex table-text">
+                <v-icon color="#5064CC" size="30" class="mr-2">mdi-lock</v-icon>
+                <v-text-field
+                  color="#2F323A"
+                  name="pwd"
+                  label="Old Password"
+                  id="old"
+                  type="password"
+                >
+                </v-text-field>
+              </div>
+
+              <div class="d-flex table-text">
+                <v-icon color="#5064CC" size="30" class="mr-2">mdi-lock</v-icon>
+                <v-text-field
+                  color="#2F323A"
+                  name="pwd"
+                  label="New Pasword"
+                  id="new"
+                  type="password"
+                >
+                </v-text-field>
+              </div>
+
+              <div class="d-flex table-text">
+                <v-icon color="#5064CC" size="30" class="mr-2">mdi-lock</v-icon>
+                <v-text-field
+                  color="#2F323A"
+                  name="pwd"
+                  label="Confirm Password"
+                  id="confirm"
+                  type="password"
+                >
+                </v-text-field>
+              </div>
+              <v-btn
+                class="text-capitalize text text-color white--text float-right"
+              >
+                Update Password
+              </v-btn>
+            </v-form>
           </div>
         </v-col>
         <v-col sm="8">
@@ -65,29 +112,71 @@
                   <td>
                     <v-icon size="34">{{ index.avatar }}</v-icon>
                   </td>
-                  <td :class="{'disabled': !index.is_active || !index.is_activated}">{{ index.name }}</td>
-                  <td :class="{'disabled': !index.is_active || !index.is_activated}">{{ index.email }}</td>
+                  <td
+                    :class="{
+                      disabled: !index.is_active || !index.is_activated,
+                    }"
+                  >
+                    {{ index.name }}
+                  </td>
+                  <td
+                    :class="{
+                      disabled: !index.is_active || !index.is_activated,
+                    }"
+                  >
+                    {{ index.email }}
+                  </td>
                   <td>
-                    <v-select v-if="index.is_active" color="#5064cc" :items="index.items"></v-select>
-                    <v-select v-else color="#5064cc" disabled filled dense :items="index.items"></v-select>
+                    <v-select
+                      v-if="index.is_active"
+                      color="#5064cc"
+                      :items="index.items"
+                    ></v-select>
+                    <v-select
+                      v-else
+                      color="#5064cc"
+                      disabled
+                      filled
+                      dense
+                      :items="index.items"
+                    ></v-select>
                   </td>
                   <td>
                     <div class="d-flex mr-2" v-if="index.is_activated">
-                      <v-btn color="#fff" small depressed class="ml-5" v-if="index.is_active"><v-icon size="20" color="#EB0808">mdi-cancel</v-icon></v-btn>
-                      <v-btn color="#fff" small depressed v-else  class="ml-5"><v-icon size="20" color="green">mdi-lock-open-variant</v-icon></v-btn>
-                      <v-btn color="#fff" small depressed><v-icon size="20" color="#EB0808">mdi-trash-can</v-icon></v-btn>
+                      <v-btn
+                        color="#fff"
+                        small
+                        depressed
+                        class="ml-5"
+                        v-if="index.is_active"
+                        ><v-icon size="20" color="#EB0808"
+                          >mdi-cancel</v-icon
+                        ></v-btn
+                      >
+                      <v-btn color="#fff" small depressed v-else class="ml-5"
+                        ><v-icon size="20" color="green"
+                          >mdi-lock-open-variant</v-icon
+                        ></v-btn
+                      >
+
+                      <alert />
                     </div>
-                    <v-btn v-else
+                    <v-btn
+                      v-else
                       class="text-capitalize text btn-sm text-color white--text"
                     >
                       Resend Invitation
                     </v-btn>
                   </td>
                 </tr>
+                <tr>
+                  <td></td>
+                </tr>
               </tbody>
             </template>
           </v-simple-table>
           <v-btn
+            v-if="is_changePwd"
             class="text-capitalize text text-color white--text my-5 float-right px-12"
           >
             Save
@@ -99,10 +188,18 @@
 </template>
 
 <script>
+import modal from "@/components/dialog";
+import alert from "@/components/alert";
 export default {
   name: "home",
+  components: {
+    modal,
+    alert,
+  },
   data() {
     return {
+      errorAlert: false,
+      is_changePwd: true,
       desserts: [
         {
           avatar: "mdi-account-circle",
@@ -110,7 +207,7 @@ export default {
           email: "Munachim@brandmobileafrica.com",
           items: ["Admin", "User"],
           is_active: true,
-          is_activated: true
+          is_activated: true,
         },
         {
           avatar: "mdi-account-circle",
@@ -118,7 +215,7 @@ export default {
           email: "Munachim@brandmobileafrica.com",
           items: ["Admin", "User"],
           is_active: true,
-          is_activated: true
+          is_activated: true,
         },
         {
           avatar: "mdi-account-circle",
@@ -126,7 +223,7 @@ export default {
           email: "Munachim@brandmobileafrica.com",
           items: ["Admin", "User"],
           is_active: true,
-          is_activated: false
+          is_activated: false,
         },
         {
           avatar: "mdi-account-circle",
@@ -134,7 +231,7 @@ export default {
           email: "Munachim@brandmobileafrica.com",
           items: ["Admin", "User"],
           is_active: false,
-          is_activated: true
+          is_activated: true,
         },
         {
           avatar: "mdi-account-circle",
@@ -142,11 +239,17 @@ export default {
           email: "Munachim@brandmobileafrica.com",
           items: ["Admin", "User"],
           is_active: false,
-          is_activated: false
+          is_activated: false,
         },
       ],
     };
   },
+
+   methods: {
+      changePwd() {
+        this.is_changePwd = false
+      }
+    }
 };
 </script>
 
@@ -220,7 +323,7 @@ export default {
   opacity: 1;
 }
 
-.disabled{
-  color: #B6B7BA;
+.disabled {
+  color: #b6b7ba;
 }
 </style>

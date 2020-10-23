@@ -5,6 +5,8 @@ import vuetify from './plugins/vuetify';
 import router from './router'
 import "bootstrap/dist/css/bootstrap.css"
 
+export const bus = new Vue()
+
 Vue.config.productionTip = false
 
 new Vue({
