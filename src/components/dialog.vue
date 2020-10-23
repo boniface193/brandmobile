@@ -1,20 +1,30 @@
 <template>
   <div class="text-center">
-    <v-dialog v-model="dialog" width="500">
+    <v-dialog v-model="dialog" width="787">
       <template v-slot:activator="{ on, attrs }">
-         <v-btn class="elevation-0" v-bind="attrs" v-on="on" color="#edf0f0" depressed small ><v-icon>mdi-pencil-circle</v-icon></v-btn>
+        <v-btn
+          class="elevation-0"
+          v-bind="attrs"
+          v-on="on"
+          color="#edf0f0"
+          depressed
+          small
+          ><v-icon>mdi-pencil-circle</v-icon></v-btn
+        >
       </template>
 
       <v-card>
-        <v-card-title
-          class="headline d-flex justify-content-end"
+        <v-btn
+          class="headline float-right"
+          depressed
+          color="white"
           @click="dialog = false"
         >
           <v-icon color="#EB0808">mdi-close</v-icon>
-        </v-card-title>
+        </v-btn>
 
         <v-container class="px-12">
-          <div class="d-flex">
+          <div class="my-5">
             <div class="float-right">
               <v-img src="@/assets/photo.svg" width="70%"></v-img>
               <p class="upload-text">Upload Picture</p>
@@ -22,15 +32,92 @@
 
             <v-spacer></v-spacer>
 
-            <div class="">
+            <div>
               <h5>Edit Personal Information</h5>
             </div>
+
+            <v-form class="space-at-top">
+              <div class="row">
+                <div class="col-6 py-0">
+                  <label for="" class="smaller-text">Full Name</label>
+                  <div>
+                    <i
+                      class="fas fa-user position-absolute mx-2 mt-2 text-primary"
+                    ></i>
+                    <input type="text" class="form-control pl-7" />
+                  </div>
+                </div>
+
+                <div class="col-sm-8 py-0">
+                  <label for="" class="smaller-text">Address</label>
+                  <div>
+                    <i
+                      class="fas fa-map-marker-alt position-absolute mx-2 mt-2 text-primary"
+                    ></i>
+                    <input
+                      type="text"
+                      class="form-control pl-7"
+                      value="#25B Adewole Kolawole Crescent, Marwa"
+                    />
+                  </div>
+                </div>
+
+                <div class="col-sm-4 pt-7">
+                  <div class="d-flex justify-content-end">
+                    <i
+                      class="fas fa-caret-down position-absolute mt-2 mr-2"
+                    ></i>
+                    <select class="form-control">
+                      <option value="">City</option>
+                    </select>
+                  </div>
+                </div>
+
+                <div class="col-sm-4 pt-0">
+                  <div class="d-flex justify-content-end">
+                    <i
+                      class="fas fa-caret-down position-absolute mt-2 mr-2"
+                    ></i>
+                    <select class="form-control">
+                      <option value="">State</option>
+                    </select>
+                  </div>
+                </div>
+
+                <div class="row container">
+                  <div class="col-6">
+                    <label for="" class="smaller-text">Email</label>
+                    <div>
+                      <i
+                        class="fas fa-envelope position-absolute mx-2 mt-2 text-primary"
+                      ></i>
+                      <input type="text" class="form-control pl-7" />
+                    </div>
+                  </div>
+
+                  <div class="col-6">
+                    <label for="" class="smaller-text">Phone Number</label>
+                    <div>
+                      <i
+                        class="fas fa-phone position-absolute mx-2 mt-2 text-primary"
+                      ></i>
+                      <input
+                        type="text"
+                        class="form-control pl-7"
+                        placeholder="+234"
+                      />
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </v-form>
           </div>
         </v-container>
 
-        <v-card-actions>
-          <v-spacer></v-spacer>
-          <v-btn color="primary" text @click="dialog = false"> I accept </v-btn>
+        <v-card-actions class="d-flex justify-content-center my-12">
+          <button class="btn btn-primary w-25" text @click="dialog = false">
+            Update
+          </button>
         </v-card-actions>
       </v-card>
     </v-dialog>
@@ -48,24 +135,21 @@ export default {
 };
 </script>
 
-<style lang="css">
-.v-card.v-sheet.theme--light {
-  border: solid 1px #44099f;
-}
-
-.v-overlay__scrim {
-  background: #ffffff 0% 0% no-repeat padding-box;
-  opacity: 1;
-  backdrop-filter: blur(6px);
-  -webkit-backdrop-filter: blur(6px);
-  overflow: hidden;
-}
-
-.upload-text {
+<style lang="css" scoped>
+.smaller-text {
   text-align: left;
-  font: normal normal bold 9px/10px sans-serif;
+  font: normal normal normal 10px/20px sans-serif;
   letter-spacing: 0px;
   color: #2f323a;
-  opacity: 0.74;
+  opacity: 0.57;
+}
+
+.form-control {
+  outline: none;
+  border: 0.5px solid #44099f;
+}
+
+.space-at-top {
+  margin-top: 10%;
 }
 </style>

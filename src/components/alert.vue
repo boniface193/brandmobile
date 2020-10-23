@@ -2,32 +2,51 @@
   <div class="text-center">
     <v-dialog v-model="dialog" width="437">
       <template v-slot:activator="{ on, attr }">
-         <v-btn color="#fff" small depressed v-bind="attr" v-on="on"><v-icon size="20" color="#EB0808"
-                          >mdi-trash-can</v-icon
-                        ></v-btn>
+        <v-btn color="#fff" small depressed v-bind="attr" v-on="on"
+          ><v-icon size="20" color="#EB0808">mdi-trash-can</v-icon></v-btn
+        >
       </template>
 
       <v-card>
-        <v-btn class="headline float-right" depressed color="white" @click="dialog = false">
+        <v-btn
+          class="headline float-right"
+          depressed
+          color="white"
+          @click="dialog = false"
+        >
           <v-icon color="#EB0808">mdi-close</v-icon>
         </v-btn>
 
         <div class="container text-center mt-5">
           <div class="d-flex justify-content-center">
             <div class="">
-              <v-img src="@/assets/signs.svg" width="50px" class="text-center"></v-img>
+              <v-img
+                src="@/assets/signs.svg"
+                width="50px"
+                class="text-center"
+              ></v-img>
             </div>
           </div>
           <div class="mt-3">
-              <p class="alert-text-sm">You’re about to delete this User. Are you sure ?</p>
-            </div>
+            <p class="alert-text-sm">
+              You’re about to delete this User. Are you sure ?
+            </p>
+          </div>
         </div>
 
-        <!-- <v-divider></v-divider> -->
-
         <v-card-actions class="d-flex justify-content-center mb-5">
-          <v-btn class="text-capitalize px-12 mr-8 shadow-sm" @click="dialog = false"> Yes </v-btn>
-          <v-btn class="text-capitalize px-12 shadow-sm" @click="dialog = false"> No </v-btn>
+          <v-btn
+            class="text-capitalize px-12 mr-8 shadow-sm"
+            @click="dialog = false"
+          >
+            Yes
+          </v-btn>
+          <v-btn
+            class="text-capitalize px-12 shadow-sm"
+            @click="dialog = false"
+          >
+            No
+          </v-btn>
         </v-card-actions>
       </v-card>
     </v-dialog>
@@ -67,14 +86,14 @@ export default {
   opacity: 0.74;
 }
 
-.alert-text-sm{
-font: normal normal normal 14px/30px sans-serif;
-letter-spacing: 0px;
-color: #080808;
-opacity: 1;
+.alert-text-sm {
+  font: normal normal normal 14px/30px sans-serif;
+  letter-spacing: 0px;
+  color: #080808;
+  opacity: 1;
 }
 
-div .text-center{
-    width: 55%;
+div .text-center {
+  width: 55%;
 }
 </style>

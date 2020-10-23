@@ -22,7 +22,7 @@
       <v-toolbar-title class="text-size grey--text"> Help </v-toolbar-title>
     </v-app-bar>
 
-    <v-navigation-drawer app class="dark" width="200" dark v-model="drawer" >
+    <v-navigation-drawer app class="dark" width="200" dark v-model="drawer">
       <v-container>
         <img
           src="https://brandmobileafrica.com/images/bma-log.png"
@@ -30,30 +30,29 @@
           width="50%"
         />
       </v-container>
-        <v-list class="mt-12 pa-0" nav tile>
-          <v-list-item
+      <v-list class="mt-12 pa-0" nav tile>
+        <v-list-item
           active-class="bg-white rounded-0"
           class="pa-0"
-            v-for="item in items"
-            :key="item.key"
-            link
-            router
-            :to="item.routes"
-            
-          >
+          v-for="item in items"
+          :key="item.key"
+          link
+          router
+          :to="item.routes"
+        >
           <div class="w-100">
             <v-list-item-content class="mx-3">
               <v-list-item-title class="text-size-md">
-              <v-img :src="item.icon" width="13%" class="float-left"></v-img>
-              <div class="ml-12" :class="{'linkColor': item.active}">
-                {{ item.title }}
-              </div>
+                <v-img :src="item.icon" width="13%" class="float-left"></v-img>
+                <div class="ml-12" :class="{ linkColor: item.active }">
+                  {{ item.title }}
+                </div>
               </v-list-item-title>
             </v-list-item-content>
-              <v-divider class="ma-0"></v-divider>
-            </div>
-          </v-list-item>
-        </v-list>
+            <v-divider class="ma-0"></v-divider>
+          </div>
+        </v-list-item>
+      </v-list>
     </v-navigation-drawer>
   </nav>
 </template>
@@ -64,8 +63,13 @@ export default {
     return {
       drawer: true,
       items: [
-        { title: "Dashboard", icon: require("../assets/window.svg"), routes: "/", active: true},
-        { title: "Clients", icon: require("../assets/hotel.svg")},
+        {
+          title: "Dashboard",
+          icon: require("../assets/window.svg"),
+          routes: "/",
+          active: true,
+        },
+        { title: "Clients", icon: require("../assets/hotel.svg") },
         { title: "Audience", icon: require("../assets/target.svg") },
         { title: "Games", icon: require("../assets/dice.svg") },
         { title: "Redemption", icon: require("../assets/coupon.svg") },
@@ -80,51 +84,39 @@ export default {
   font-size: 10px;
 }
 
-.linkColor{
-  color: #44099F;
+.linkColor {
+  color: #44099f;
 }
 
-.text-size-md{
-font-weight: normal;
-color: #fff;
-font: normal normal normal 14px/21px sans-serif;
-letter-spacing: 0px;
+.text-size-md {
+  font-weight: normal;
+  color: #fff;
+  font: normal normal normal 14px/21px sans-serif;
+  letter-spacing: 0px;
 }
 
-a:hover{
+a:hover {
   text-decoration: none;
   /* color: #44099F; */
 }
 
 .v-list-item__title.text-size-md:visited {
-    color: #44099F;
+  color: #44099f;
 }
 
 .v-list-item__title.text-size-md:active {
-    color: #44099F;
+  color: #44099f;
 }
 
 .v-list-item__title.text-size-md::after {
-    color: #44099F;
+  color: #44099f;
 }
 
 .v-list-item__title.text-size-md::before {
-    color: #44099F;
+  color: #44099f;
 }
 
 .v-list-item__title.text-size-md:target {
-    color: #44099F;
+  color: #44099f;
 }
-
-/* a.pa-0.v-list-item--active.v-list-item.v-list-item--link.theme--dark{
-color: #44099F;
-} */
-
-/* a:hover{
-text-align: left;
-font: normal normal normal 11px/23px sans-serif;
-letter-spacing: 0px;
-color: #44099F;
-opacity: 1;
-} */
 </style>

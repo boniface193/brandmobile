@@ -27,6 +27,9 @@ export default {
 };
 </script>
 <style lang="css" scoped>
-
+.background {
+  background-color: #edf0f0;
+  height: 100%;
+}
 
 </style>

@@ -4,21 +4,24 @@
       <v-row class="height-30">
         <v-col>
           <div class="d-flex justify-content-end">
+           <v-btn depressed small v-if="is_invite" @click="is_invite = false" color="#edf0f0"><v-icon color="#EB0808">mdi-close-circle</v-icon></v-btn> 
+            <div v-else>
             <v-btn class="text-capitalize text text-color white--text mr-4">
               Resend Invitation
               <v-icon class="ml-2">mdi-email</v-icon>
             </v-btn>
-            <v-btn class="text-capitalize text text-color white--text">
+            <v-btn class="text-capitalize text text-color white--text" @click="inviteUser()">
               Invite User
               <v-icon class="ml-2">mdi-plus-circle</v-icon>
             </v-btn>
+            </div>
           </div>
         </v-col>
       </v-row>
       <v-row>
         <v-col sm="4">
           <div class="float-right mr-5">
-            <modal/>
+            <modal />
           </div>
           <div class="d-flex">
             <div>
@@ -102,79 +105,107 @@
         </v-col>
         <v-col sm="8">
           <!-- table -->
-          <v-simple-table>
-            <template v-slot:default>
-              <thead>
-                <p class="table-head ma-5">Users</p>
-              </thead>
-              <tbody>
-                <tr v-for="(index, item) in desserts" :key="item.name">
-                  <td>
-                    <v-icon size="34">{{ index.avatar }}</v-icon>
-                  </td>
-                  <td
-                    :class="{
-                      disabled: !index.is_active || !index.is_activated,
-                    }"
-                  >
-                    {{ index.name }}
-                  </td>
-                  <td
-                    :class="{
-                      disabled: !index.is_active || !index.is_activated,
-                    }"
-                  >
-                    {{ index.email }}
-                  </td>
-                  <td>
-                    <v-select
-                      v-if="index.is_active"
-                      color="#5064cc"
-                      :items="index.items"
-                    ></v-select>
-                    <v-select
-                      v-else
-                      color="#5064cc"
-                      disabled
-                      filled
-                      dense
-                      :items="index.items"
-                    ></v-select>
-                  </td>
-                  <td>
-                    <div class="d-flex mr-2" v-if="index.is_activated">
-                      <v-btn
-                        color="#fff"
-                        small
-                        depressed
-                        class="ml-5"
-                        v-if="index.is_active"
-                        ><v-icon size="20" color="#EB0808"
-                          >mdi-cancel</v-icon
-                        ></v-btn
-                      >
-                      <v-btn color="#fff" small depressed v-else class="ml-5"
-                        ><v-icon size="20" color="green"
-                          >mdi-lock-open-variant</v-icon
-                        ></v-btn
-                      >
-
-                      <alert />
-                    </div>
+          <v-card class="elevation-3">
+            <v-card-text class="pb-0">
+              <p class="table-head mb-0">Users</p>
+            </v-card-text>
+            <v-card-title class="pa-0" v-if="is_invite">
+              <v-container class="mx-12">
+                <v-row>
+                  <v-col cols="6">
+                    <v-text-field
+                      name="name"
+                      label="Type Email Address"
+                      id="id"
+                    ></v-text-field>
+                  </v-col>
+                  <v-col cols="3">
+                    <v-select items="Admin" v-model="value"></v-select>
+                  </v-col>
+                  <v-col cols="3">
                     <v-btn
-                      v-else
-                      class="text-capitalize text btn-sm text-color white--text"
+                      class="text-capitalize text btn-sm text-color white--text px-8 mt-5"
                     >
-                      Resend Invitation
+                      Invite User
                     </v-btn>
-                  </td>
-                </tr>
-                <tr>
-                  <td></td>
-                </tr>
-              </tbody>
-            </template>
-          </v-simple-table>
+                  </v-col>
+                </v-row>
+              </v-container>
+            </v-card-title>
+
+            <v-simple-table>
+              <template v-slot:default>
+                <thead>
+                </thead>
+                <tbody>
+                  <tr v-for="(index, item) in desserts" :key="item.name">
+                    <td>
+                      <v-icon size="34">{{ index.avatar }}</v-icon>
+                    </td>
+                    <td
+                      :class="{
+                        disabled: !index.is_active || !index.is_activated,
+                      }"
+                    >
+                      {{ index.name }}
+                    </td>
+                    <td
+                      :class="{
+                        disabled: !index.is_active || !index.is_activated,
+                      }"
+                    >
+                      {{ index.email }}
+                    </td>
+                    <td>
+                      <v-select
+                        v-if="index.is_active"
+                        color="#5064cc"
+                        :items="index.items"
+                      ></v-select>
+                      <v-select
+                        v-else
+                        color="#5064cc"
+                        disabled
+                        filled
+                        dense
+                        :items="index.items"
+                      ></v-select>
+                    </td>
+                    <td>
+                      <div class="d-flex mr-2" v-if="index.is_activated">
+                        <v-btn
+                          color="#fff"
+                          small
+                          depressed
+                          class="ml-5"
+                          v-if="index.is_active"
+                          ><v-icon size="20" color="#EB0808"
+                            >mdi-cancel</v-icon
+                          ></v-btn
+                        >
+                        <v-btn color="#fff" small depressed v-else class="ml-5"
+                          ><v-icon size="20" color="green"
+                            >mdi-lock-open-variant</v-icon
+                          ></v-btn
+                        >
+
+                        <alert />
+                      </div>
+                      <v-btn
+                        v-else
+                        class="text-capitalize text btn-sm text-color white--text"
+                      >
+                        Resend Invitation
+                      </v-btn>
+                    </td>
+                  </tr>
+                  <tr>
+                    <td></td>
+                  </tr>
+                </tbody>
+              </template>
+            </v-simple-table>
+          </v-card>
           <v-btn
             v-if="is_changePwd"
             class="text-capitalize text text-color white--text my-5 float-right px-12"
@@ -198,6 +229,7 @@ export default {
   },
   data() {
     return {
+      is_invite: false,
       errorAlert: false,
       is_changePwd: true,
       desserts: [
@@ -245,18 +277,19 @@ export default {
     };
   },
 
-   methods: {
-      changePwd() {
-        this.is_changePwd = false
-      }
+  methods: {
+    changePwd() {
+      this.is_changePwd = false;
+    },
+
+    inviteUser(){
+      this.is_invite = true;
     }
+  },
 };
 </script>
 
 <style lang="css" scoped>
-.background {
-  background-color: #edf0f0;
-}
 .text {
   text-align: center;
   font-family: sans-serif;
@@ -325,5 +358,9 @@ export default {
 
 .disabled {
   color: #b6b7ba;
+}
+
+.v-card.v-sheet.theme--light {
+  border: solid 1px #fff;
 }
 </style>
