@@ -12,9 +12,10 @@
       </v-toolbar-title>
 
       <v-spacer></v-spacer>
-      <v-badge color="#44099F" overlap icon="mdi-account"> </v-badge>
+      <v-img v-if="user.image_url" :src="user.image_url" max-width="25" ></v-img>
+      <v-badge v-else color="#44099F" overlap icon="mdi-account"> </v-badge>
       <v-toolbar-title class="text-size grey--text ml-3">
-        Hi, Moshood
+        Hi, {{ user.first_name }}
       </v-toolbar-title>
       <v-icon color="#44099F" size="23" class="ml-5 mr-1"
         >mdi-help-circle-outline</v-icon
@@ -58,6 +59,7 @@
 </template>
 
 <script>
+import { mapGetters } from "vuex"
 export default {
   data() {
     return {
@@ -75,6 +77,11 @@ export default {
         { title: "Redemption", icon: require("../assets/coupon.svg") },
       ],
     };
+  },
+
+   computed: {
+    ...mapGetters(['user'])
+  
   },
 };
 </script>

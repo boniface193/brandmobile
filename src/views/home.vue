@@ -4,16 +4,26 @@
       <v-row class="height-30">
         <v-col>
           <div class="d-flex justify-content-end">
-           <v-btn depressed small v-if="is_invite" @click="is_invite = false" color="#edf0f0"><v-icon color="#EB0808">mdi-close-circle</v-icon></v-btn> 
+            <v-btn
+              depressed
+              small
+              v-if="is_invite"
+              @click="is_invite = false"
+              color="#edf0f0"
+              ><v-icon color="#EB0808">mdi-close-circle</v-icon></v-btn
+            >
             <div v-else>
-            <v-btn class="text-capitalize text text-color white--text mr-4">
-              Resend Invitation
-              <v-icon class="ml-2">mdi-email</v-icon>
-            </v-btn>
-            <v-btn class="text-capitalize text text-color white--text" @click="inviteUser()">
-              Invite User
-              <v-icon class="ml-2">mdi-plus-circle</v-icon>
-            </v-btn>
+              <v-btn class="text-capitalize text text-color white--text mr-4">
+                Resend Invitation
+                <v-icon class="ml-2">mdi-email</v-icon>
+              </v-btn>
+              <v-btn
+                class="text-capitalize text text-color white--text"
+                @click="inviteUser()"
+              >
+                Invite User
+                <v-icon class="ml-2">mdi-plus-circle</v-icon>
+              </v-btn>
             </div>
           </div>
         </v-col>
@@ -25,21 +35,28 @@
           </div>
           <div class="d-flex">
             <div>
-              <v-img src="@/assets/photo.svg" width="75px"></v-img>
+              <v-img
+                v-if="user.image_url"
+                :src="user.image_url"
+                width="75px"
+              ></v-img>
+              <v-img v-else src="@/assets/photo.svg" width="75px"></v-img>
               <p class="upload-text">Upload Picture</p>
             </div>
-            <h3 class="upload-text-lg mt-7 ml-4">Moshood Aremu</h3>
+            <h3 class="upload-text-lg mt-7 ml-4">
+              {{ user.first_name }} {{ user.last_name }}
+            </h3>
           </div>
 
           <div>
             <div class="table-text mt-5">
               <v-icon color="#5064CC" size="30" class="mr-2">mdi-email</v-icon>
-              Moshood@brandmobileafrica.com
+              {{ user.email }}
             </div>
 
             <div class="table-text mt-5">
               <v-icon color="#5064CC" size="30" class="mr-2">mdi-phone</v-icon>
-              +234 818 655 1442
+              {{ user.phone }}
             </div>
 
             <div class="table-text mt-5 d-flex">
@@ -47,8 +64,7 @@
                 >mdi-map-marker</v-icon
               >
               <p class="mb-0">
-                #25B, Adewole Kolawole Crescent, off Admiralty way, Lekki, Phase
-                1, Lagos, Nigeria.
+                {{ user.address }}
               </p>
             </div>
 
@@ -135,32 +151,36 @@
 
             <v-simple-table>
               <template v-slot:default>
-                <thead>
-                </thead>
+                <thead></thead>
                 <tbody>
-                  <tr v-for="(index, item) in desserts" :key="item.name">
+                  <tr v-for="(item) in desserts" :key="item.user_id">
                     <td>
-                      <v-icon size="34">{{ index.avatar }}</v-icon>
+                      <v-img
+                        v-if="item.image_url"
+                        :src="item.image_url"
+                        width="34"
+                      ></v-img>
+                      <v-icon v-else size="34">mdi-account-circle</v-icon>
                     </td>
                     <td
                       :class="{
-                        disabled: !index.is_active || !index.is_activated,
+                        disabled: !item.is_active || !item.has_activated,
                       }"
                     >
-                      {{ index.name }}
+                      {{ item.first_name }}
                     </td>
                     <td
                       :class="{
-                        disabled: !index.is_active || !index.is_activated,
+                        disabled: !item.is_active || !item.has_activated,
                       }"
                     >
-                      {{ index.email }}
+                      {{ item.email }}
                     </td>
                     <td>
                       <v-select
-                        v-if="index.is_active"
+                        v-if="item.is_active"
                         color="#5064cc"
-                        :items="index.items"
+                        items="Admin"
                       ></v-select>
                       <v-select
                         v-else
@@ -168,17 +188,17 @@
                         disabled
                         filled
                         dense
-                        :items="index.items"
+                        items="Admin"
                       ></v-select>
                     </td>
                     <td>
-                      <div class="d-flex mr-2" v-if="index.is_activated">
+                      <div class="d-flex mr-2" v-if="item.has_activated">
                         <v-btn
                           color="#fff"
                           small
                           depressed
                           class="ml-5"
-                          v-if="index.is_active"
+                          v-if="item.is_active"
                           ><v-icon size="20" color="#EB0808"
                             >mdi-cancel</v-icon
                           ></v-btn
@@ -221,6 +241,7 @@
 <script>
 import modal from "@/components/dialog";
 import alert from "@/components/alert";
+import { mapGetters } from "vuex";
 export default {
   name: "home",
   components: {
@@ -232,49 +253,17 @@ export default {
       is_invite: false,
       errorAlert: false,
       is_changePwd: true,
-      desserts: [
-        {
-          avatar: "mdi-account-circle",
-          name: "Munachim Anyamene",
-          email: "Munachim@brandmobileafrica.com",
-          items: ["Admin", "User"],
-          is_active: true,
-          is_activated: true,
-        },
-        {
-          avatar: "mdi-account-circle",
-          name: "Munachim Anyamene",
-          email: "Munachim@brandmobileafrica.com",
-          items: ["Admin", "User"],
-          is_active: true,
-          is_activated: true,
-        },
-        {
-          avatar: "mdi-account-circle",
-          name: "Eclair",
-          email: "Munachim@brandmobileafrica.com",
-          items: ["Admin", "User"],
-          is_active: true,
-          is_activated: false,
-        },
-        {
-          avatar: "mdi-account-circle",
-          name: "Cupcake",
-          email: "Munachim@brandmobileafrica.com",
-          items: ["Admin", "User"],
-          is_active: false,
-          is_activated: true,
-        },
-        {
-          avatar: "mdi-account-circle",
-          name: "Gingerbread",
-          email: "Munachim@brandmobileafrica.com",
-          items: ["Admin", "User"],
-          is_active: false,
-          is_activated: false,
-        },
-      ],
     };
+  },
+
+  computed: {
+    ...mapGetters(['desserts']),
+    ...mapGetters(['user'])
+  
+  },
+
+  mounted() {
+    this.$store.dispatch('getContent')
   },
 
   methods: {
@@ -282,9 +271,9 @@ export default {
       this.is_changePwd = false;
     },
 
-    inviteUser(){
+    inviteUser() {
       this.is_invite = true;
-    }
+    },
   },
 };
 </script>

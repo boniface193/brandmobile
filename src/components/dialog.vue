@@ -36,7 +36,7 @@
               <h5>Edit Personal Information</h5>
             </div>
 
-            <v-form class="space-at-top">
+            <v-form class="space-at-top" @submit.prevent="updatedUser(user.user_id)">
               <div class="row">
                 <div class="col-6 py-0">
                   <label for="" class="smaller-text">Full Name</label>
@@ -44,7 +44,7 @@
                     <i
                       class="fas fa-user position-absolute mx-2 mt-2 text-primary"
                     ></i>
-                    <input type="text" class="form-control pl-7" />
+                    <input type="text" class="form-control pl-7" :value="`${user.first_name} ${user.last_name}`"/>
                   </div>
                 </div>
 
@@ -57,7 +57,7 @@
                     <input
                       type="text"
                       class="form-control pl-7"
-                      value="#25B Adewole Kolawole Crescent, Marwa"
+                      :value="user.address"
                     />
                   </div>
                 </div>
@@ -91,7 +91,7 @@
                       <i
                         class="fas fa-envelope position-absolute mx-2 mt-2 text-primary"
                       ></i>
-                      <input type="text" class="form-control pl-7" />
+                      <input type="text" class="form-control pl-7" :value="user.email"/>
                     </div>
                   </div>
 
@@ -105,32 +105,45 @@
                         type="text"
                         class="form-control pl-7"
                         placeholder="+234"
+                        :value="user.phone"
                       />
                     </div>
                   </div>
                 </div>
               </div>
+
+        <v-card-actions class="d-flex justify-content-center my-12">
+          <button class="btn btn-primary w-25">
+            Update
+          </button>
+        </v-card-actions>
             </v-form>
           </div>
         </v-container>
 
-        <v-card-actions class="d-flex justify-content-center my-12">
-          <button class="btn btn-primary w-25" text @click="dialog = false">
+        <!-- <v-card-actions class="d-flex justify-content-center my-12">
+          <button class="btn btn-primary w-25">
             Update
           </button>
-        </v-card-actions>
+        </v-card-actions> -->
       </v-card>
     </v-dialog>
   </div>
 </template>
 
 <script>
+import { mapGetters } from "vuex"
 export default {
   props: [],
   data() {
     return {
       dialog: false,
     };
+  },
+
+  computed: {
+    ...mapGetters(['user'])
+  
   },
 };
 </script>
