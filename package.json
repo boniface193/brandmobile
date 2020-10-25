@@ -5,8 +5,9 @@
   "scripts": {
     "server": "json-server ./src/database/profile.json",
     "start": "npm-run-all -p server serve",
+    "create": "npm-run-all -p server build",
     "serve": "vue-cli-service serve",
-    "build": "npm-run-all -p server vue-cli-service build",
+    "build": "vue-cli-service build",
     "lint": "vue-cli-service lint"
   },
   "dependencies": {
