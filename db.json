@@ -1,0 +1,115 @@
+{
+  "data": [
+    {
+      "id": "MXTi9FjpyQKxfEsqQjbtGtZvjEuvBWRz",
+      "first_name": "Ikechukwu Boniface",
+      "email": "bonifacedennis99@gmail.com",
+      "phone": "444444444",
+      "address": "Amolasho",
+      "image_url": "https://avatars.dicebear.com/api/male/.svg?r=1&w=1&mood[]=happy"
+    }
+  ],
+  "subUsers": [
+    {
+      "id": "MXTi9FjpyQKxfEsqQjbtGtZvjEuvBWRq",
+      "first_name": "Munachim Anyamene",
+      "image_url": "https://avatars.dicebear.com/api/male/.svg?r=1&w=1&mood[]=happy",
+      "email": "Munachim@brandmobileafrica.com",
+      "is_active": true,
+      "has_activated": true,
+      "role": {
+        "role_id": "MXTi9FjpyQKxfEsqQjbtGtZvjEuvBWRo",
+        "name": "admin"
+      }
+    },
+    {
+      "id": "MXTi9FjpyQKxfEsqQjbtGtZvjEuvBWRw",
+      "first_name": "Munachim Anyamene",
+      "is_active": true,
+      "email": "Munachim@brandmobileafrica.com",
+      "has_activated": true,
+      "role": {
+        "role_id": "MXTi9FjpyQKxfEsqQjbtGtZvjEuvBWRo",
+        "name": "admin"
+      }
+    },
+    {
+      "id": "MXTi9FjpyQKxfEsqQjbtGtZvjEuvBWRe",
+      "first_name": "Munachim Anyamene",
+      "image_url": "https://avatars.dicebear.com/api/male/.svg?r=1&w=1&mood[]=happy",
+      "email": "Munachim@brandmobileafrica.com",
+      "is_active": true,
+      "has_activated": false,
+      "role": {
+        "role_id": "MXTi9FjpyQKxfEsqQjbtGtZvjEuvBWRo",
+        "name": "admin"
+      }
+    },
+    {
+      "id": "MXTi9FjpyQKxfEsqQjbtGtZvjEuvBWRr",
+      "first_name": "Munachim Anyamene",
+      "image_url": "https://avatars.dicebear.com/api/male/.svg?r=1&w=1&mood[]=happy",
+      "email": "Munachim@brandmobileafrica.com",
+      "is_active": false,
+      "has_activated": true,
+      "role": {
+        "role_id": "MXTi9FjpyQKxfEsqQjbtGtZvjEuvBWRo",
+        "name": "admin"
+      }
+    },
+    {
+      "id": "MXTi9FjpyQKxfEsqQjbtGtZvjEuvBWRt",
+      "first_name": "Munachim Anyamene",
+      "is_active": false,
+      "email": "Munachim@brandmobileafrica.com",
+      "has_activated": false,
+      "role": {
+        "role_id": "MXTi9FjpyQKxfEsqQjbtGtZvjEuvBWRo",
+        "name": "admin"
+      }
+    },
+    {
+      "email": "root",
+      "first_name": "Munachim Anyamene",
+      "is_active": false,
+      "has_activated": true,
+      "role": {
+        "role_id": "MXTi9FjpyQKxfEsqQjbtGtZvjEuvBWRo"
+      },
+      "id": "KFyRXHI"
+    },
+    {
+      "email": "Ikechukwu Boniface",
+      "first_name": "Munachim Anyamene",
+      "is_active": false,
+      "has_activated": true,
+      "role": {
+        "role_id": "MXTi9FjpyQKxfEsqQjbtGtZvjEuvBWRo"
+      },
+      "id": "Z1UJuwA"
+    }
+  ],
+  "subData": [
+    {
+      "id": 1,
+      "name": "admin",
+      "guard_name": "web",
+      "created_at": "2020-06-21T19:47:35.000000Z",
+      "updated_at": "2020-06-21T19:47:35.000000Z"
+    },
+    {
+      "id": 2,
+      "name": "finance",
+      "guard_name": "web",
+      "created_at": "2020-06-21T19:47:35.000000Z",
+      "updated_at": "2020-06-21T19:47:35.000000Z"
+    },
+    {
+      "id": 3,
+      "name": "planner",
+      "guard_name": "web",
+      "created_at": "2020-06-21T19:47:35.000000Z",
+      "updated_at": "2020-06-21T19:47:35.000000Z"
+    }
+  ]
+}

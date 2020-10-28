@@ -8,42 +8,100 @@ Vue.use(Vuex)
 
 export default new Vuex.Store({
   state: {
-    desserts: []
+    desserts: [],
+    user: []
   },
-  mutations: {
-    getUsers(state, payload){
-      state.desserts = payload
-    }
-  },
-  actions: {
-    getContent(context){
-     axios.get(`${URL_API}/data`)
-     .then(res => {
-       context.commit('getUsers', res.data.data)
-     })
-    },
 
-//     address: "#25B, Adewole Kolawole Crescent, off Admiralty way, Lekki, Phase 1, Lagos, Nigeria."
-// email: "Moshood@brandmobileafrica.com"
-// first_name: "Moshood"
-// first_time_login: false
-// image_url: "https://avatars.dicebear.com/api/male/.svg?r=1&w=1&mood[]=happy"
-// last_name: "Aremu"
-// phone: "+23
-
-    updateUser(){
-      axios.patch(`${URL_API}/data`, {
-        "address": this.address
-      })
-    }
-  },
   getters: {
     desserts(state) {
-      return state.desserts.sub_users
+      return state.desserts
     },
     user(state) {
-      return state.desserts
+      return state.user
     }
 
-  }
+  },
+
+  actions: {
+    async getContent(context) {
+      const res = await axios.get(`${URL_API}/subUsers`)
+      try {
+        context.commit('getUsers', res.data)
+      }
+      catch (err) {
+        console.log(err)
+      }
+
+    },
+
+    async getuser(context) {
+      const res = await axios.get(`${URL_API}/data`)
+
+      try {
+        context.commit('getUser', res.data)
+      }
+      catch (err) {
+        console.log(err)
+      }
+    },
+
+    async postSubUser({ commit }, email, name) {
+      const res = await axios.post(`${URL_API}/subUsers`, {
+        email, first_name: "Munachim Anyamene", is_active: false, has_activated: true, role: { role_id: "MXTi9FjpyQKxfEsqQjbtGtZvjEuvBWRo", name: name }
+      })
+      try {
+        commit('postUser', res.data)
+      }
+      catch (err) {
+        console.log(err)
+      }
+    },
+
+    async delUser({commit}, payload) {
+      await axios.delete(`${URL_API}/subUsers/${payload}`, payload)
+      // try{
+      commit('deleteUser', payload)
+      // }
+      // catch(err){
+      //   console.log(err)
+      // }
+    },
+
+    async updateData({ commit }, updatedata) {
+      const res = await axios.put(`${URL_API}/data/${updatedata.id}`, updatedata)
+      commit('updatedData', res.data)
+    }
+  },
+
+
+
+  mutations: {
+    getUsers(state, payload) {
+      state.desserts = payload
+    },
+
+    getUser(state, showUser) {
+      state.user = showUser
+    },
+
+    postUser(state, submitt) {
+      state.desserts.unshift(submitt)
+    },
+
+    deleteUser(state, payload) {
+      const index = state.desserts.findIndex(user => user.id === payload.id);
+      if (index !== -1) {
+
+        state.desserts.splice(index, 1, payload);
+      }
+    },
+
+    updatedData(state, updatedata) {
+      const index = state.user.findIndex(users => users.id === updatedata.id);
+      if (index !== -1) {
+        state.user.splice(index, 1, updatedata);
+      }
+    }
+  },
+
 })

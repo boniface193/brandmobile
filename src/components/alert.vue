@@ -29,24 +29,16 @@
           </div>
           <div class="mt-3">
             <p class="alert-text-sm">
-              You’re about to delete this User. Are you sure ?
+              {{name}}
             </p>
           </div>
         </div>
 
         <v-card-actions class="d-flex justify-content-center mb-5">
-          <v-btn
-            class="text-capitalize px-12 mr-8 shadow-sm"
-            @click="dialog = false"
-          >
-            Yes
-          </v-btn>
-          <v-btn
-            class="text-capitalize px-12 shadow-sm"
-            @click="dialog = false"
-          >
-            No
-          </v-btn>
+          <div class="text-capitalize px-12 py-2 mr-8 shadow-sm"
+            @click="delUser(desserts.id); dialog = false" v-html="yes"></div>
+          <div  class="text-capitalize px-12 py-2 shadow-sm"
+            @click="dialog = false" v-html="no"></div>
         </v-card-actions>
       </v-card>
     </v-dialog>
@@ -54,13 +46,26 @@
 </template>
 
 <script>
+import { mapGetters, mapActions } from "vuex"
 export default {
-  props: [],
+  props: ["name", "no", "yes"],
   data() {
     return {
       dialog: false,
     };
   },
+
+  computed: {
+    ...mapGetters(["desserts"])
+  },
+
+  methods: {
+    ...mapActions(["delUser"]),
+    // delUser(){
+    //   this.delUser(desserts.id)
+      // this.dialog = false
+    // }
+    }
 };
 </script>
 

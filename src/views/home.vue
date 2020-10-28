@@ -3,6 +3,9 @@
     <v-container>
       <v-row class="height-30">
         <v-col>
+          <div v-if="alert" class="alert alert-success" role="alert">
+            <h6 class="mb-2">{{title}}</h6>
+          </div>
           <div class="d-flex justify-content-end">
             <v-btn
               depressed
@@ -34,37 +37,49 @@
             <modal />
           </div>
           <div class="d-flex">
-            <div>
+            <div v-for="users in user" :key="users.id">
               <v-img
-                v-if="user.image_url"
-                :src="user.image_url"
+                v-if="users.image_url"
+                :src="users.image_url"
                 width="75px"
               ></v-img>
               <v-img v-else src="@/assets/photo.svg" width="75px"></v-img>
               <p class="upload-text">Upload Picture</p>
             </div>
-            <h3 class="upload-text-lg mt-7 ml-4">
-              {{ user.first_name }} {{ user.last_name }}
+            <h3
+              v-for="users in user"
+              :key="users.name"
+              class="upload-text-lg mt-7 ml-4"
+            >
+              {{ users.first_name }} {{ users.last_name }}
             </h3>
           </div>
 
           <div>
-            <div class="table-text mt-5">
+            <div
+              class="table-text mt-5"
+              v-for="users in user"
+              :key="users.email"
+            >
               <v-icon color="#5064CC" size="30" class="mr-2">mdi-email</v-icon>
-              {{ user.email }}
+              {{ users.email }}
             </div>
 
-            <div class="table-text mt-5">
+            <div
+              class="table-text mt-5"
+              v-for="users in user"
+              :key="users.phone"
+            >
               <v-icon color="#5064CC" size="30" class="mr-2">mdi-phone</v-icon>
-              {{ user.phone }}
+              {{ users.phone }}
             </div>
 
             <div class="table-text mt-5 d-flex">
               <v-icon color="#5064CC" size="30" class="mr-2"
                 >mdi-map-marker</v-icon
               >
-              <p class="mb-0">
-                {{ user.address }}
+              <p class="mb-0" v-for="users in user" :key="users.address">
+                {{ users.address }}
               </p>
             </div>
 
@@ -84,6 +99,7 @@
                   label="Old Password"
                   id="old"
                   type="password"
+                  v-model="old"
                 >
                 </v-text-field>
               </div>
@@ -96,6 +112,7 @@
                   label="New Pasword"
                   id="new"
                   type="password"
+                  v-model="newPwd"
                 >
                 </v-text-field>
               </div>
@@ -108,10 +125,11 @@
                   label="Confirm Password"
                   id="confirm"
                   type="password"
+                  v-model="confirm"
                 >
                 </v-text-field>
               </div>
-              <v-btn
+              <v-btn @click="pwdChanged()"
                 class="text-capitalize text text-color white--text float-right"
               >
                 Update Password
@@ -125,35 +143,41 @@
             <v-card-text class="pb-0">
               <p class="table-head mb-0">Users</p>
             </v-card-text>
-            <v-card-title class="pa-0" v-if="is_invite">
-              <v-container class="mx-12">
-                <v-row>
-                  <v-col cols="6">
-                    <v-text-field
-                      name="name"
-                      label="Type Email Address"
-                      id="id"
-                    ></v-text-field>
-                  </v-col>
-                  <v-col cols="3">
-                    <v-select items="Admin" v-model="value"></v-select>
-                  </v-col>
-                  <v-col cols="3">
-                    <v-btn
-                      class="text-capitalize text btn-sm text-color white--text px-8 mt-5"
-                    >
-                      Invite User
-                    </v-btn>
-                  </v-col>
-                </v-row>
-              </v-container>
-            </v-card-title>
+
+            <v-form @submit.prevent="createSubUser()">
+              <v-card-title class="pa-0" v-if="is_invite">
+                <v-container class="mx-12">
+                  <v-row>
+                    <v-col cols="6">
+                      <v-text-field
+                        name="name"
+                        label="Type Email Address"
+                        id="id"
+                        type="email"
+                        v-model="email"
+                      ></v-text-field>
+                    </v-col>
+                    <v-col cols="3">
+                      <v-select :item-value="item" :items="item"></v-select>
+                    </v-col>
+                    <v-col cols="3">
+                      <v-btn
+                        type="submit"
+                        class="text-capitalize text btn-sm text-color white--text px-8 mt-5"
+                      >
+                        <p class="mb-0">Invite User</p>
+                      </v-btn>
+                    </v-col>
+                  </v-row>
+                </v-container>
+              </v-card-title>
+            </v-form>
 
             <v-simple-table>
               <template v-slot:default>
                 <thead></thead>
                 <tbody>
-                  <tr v-for="(item) in desserts" :key="item.user_id">
+                  <tr v-for="item in desserts" :key="item.id">
                     <td>
                       <v-img
                         v-if="item.image_url"
@@ -176,20 +200,30 @@
                     >
                       {{ item.email }}
                     </td>
-                    <td>
-                      <v-select
+                    <td style="width: 18%">
+                      <div
+                        class="d-flex justify-content-end"
                         v-if="item.is_active"
-                        color="#5064cc"
-                        items="Admin"
-                      ></v-select>
-                      <v-select
-                        v-else
-                        color="#5064cc"
-                        disabled
-                        filled
-                        dense
-                        items="Admin"
-                      ></v-select>
+                      >
+                        <i
+                          class="fas fa-caret-down position-absolute mt-2 mr-2 text-primary"
+                        ></i>
+                        <select class="form-control" style="border: none">
+                          <option value="">Admin</option>
+                        </select>
+                      </div>
+
+                      <div class="d-flex justify-content-end" v-else>
+                        <i
+                          class="fas fa-caret-down position-absolute mt-2 mr-2"
+                        ></i>
+                        <select
+                          class="form-control disabled"
+                          style="border: none"
+                        >
+                          <option value="">Admin</option>
+                        </select>
+                      </div>
                     </td>
                     <td>
                       <div class="d-flex mr-2" v-if="item.has_activated">
@@ -209,7 +243,11 @@
                           ></v-btn
                         >
 
-                        <alert />
+                        <alert
+                          name="You’re about to delete this User. Are you sure ?"
+                          no="<v-btn>No</v-btn>"
+                          yes="<v-btn>Yes</v-btn>"
+                        />
                       </div>
                       <v-btn
                         v-else
@@ -241,7 +279,7 @@
 <script>
 import modal from "@/components/dialog";
 import alert from "@/components/alert";
-import { mapGetters } from "vuex";
+import { mapGetters, mapActions } from "vuex";
 export default {
   name: "home",
   components: {
@@ -250,6 +288,13 @@ export default {
   },
   data() {
     return {
+      alert: "",
+      title: "",
+      email: "",
+      item: ["Admin"],
+      old: "",
+      newPwd: "",
+      confirm: "",
       is_invite: false,
       errorAlert: false,
       is_changePwd: true,
@@ -257,13 +302,12 @@ export default {
   },
 
   computed: {
-    ...mapGetters(['desserts']),
-    ...mapGetters(['user'])
-  
+    ...mapGetters({ desserts: "desserts", user: "user" }),
   },
 
   mounted() {
-    this.$store.dispatch('getContent')
+    this.$store.dispatch("getContent");
+    this.$store.dispatch("getuser");
   },
 
   methods: {
@@ -273,6 +317,20 @@ export default {
 
     inviteUser() {
       this.is_invite = true;
+    },
+
+    pwdChanged() {
+      this.title = "Successfully changed"
+      this.alert = true;
+      this.is_changePwd = true;
+    },
+
+    ...mapActions(["postSubUser", "delUser"]),
+    createSubUser() {
+      this.postSubUser(this.email, this.item);
+      this.is_invite = false;
+      this.title = "Successfully added"
+      this.alert = true;
     },
   },
 };

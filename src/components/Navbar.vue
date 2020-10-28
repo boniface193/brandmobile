@@ -1,6 +1,6 @@
 <template>
   <nav>
-    <v-app-bar dense flat app color="#EDF0F0" class="elevation-1">
+    <v-app-bar v-for="users in user" :key="users.id" dense flat app color="#EDF0F0" class="elevation-1">
       <v-app-bar-nav-icon v-if="!drawer" @click.stop="drawer = !drawer">
       </v-app-bar-nav-icon>
 
@@ -12,10 +12,11 @@
       </v-toolbar-title>
 
       <v-spacer></v-spacer>
-      <v-img v-if="user.image_url" :src="user.image_url" max-width="25" ></v-img>
+      
+      <v-img v-if="users.image_url" :src="users.image_url" max-width="25" ></v-img>
       <v-badge v-else color="#44099F" overlap icon="mdi-account"> </v-badge>
       <v-toolbar-title class="text-size grey--text ml-3">
-        Hi, {{ user.first_name }}
+        Hi, {{users.last_name}}
       </v-toolbar-title>
       <v-icon color="#44099F" size="23" class="ml-5 mr-1"
         >mdi-help-circle-outline</v-icon
@@ -64,6 +65,7 @@ export default {
   data() {
     return {
       drawer: true,
+      users: '',
       items: [
         {
           title: "Dashboard",
@@ -81,7 +83,6 @@ export default {
 
    computed: {
     ...mapGetters(['user'])
-  
   },
 };
 </script>

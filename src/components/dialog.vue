@@ -24,9 +24,10 @@
         </v-btn>
 
         <v-container class="px-12">
-          <div class="my-5">
+          <div class="my-5" v-for="users in user" :key="users.id">
             <div class="float-right">
-              <v-img src="@/assets/photo.svg" width="70%"></v-img>
+              <v-img v-if="users.image_url" :src="users.image_url"></v-img>
+              <v-img v-else src="@/assets/photo.svg" width="70%"></v-img>
               <p class="upload-text">Upload Picture</p>
             </div>
 
@@ -36,7 +37,7 @@
               <h5>Edit Personal Information</h5>
             </div>
 
-            <v-form class="space-at-top" @submit.prevent="updatedUser(user.user_id)">
+            <v-form class="space-at-top" @submit.prevent="updateUser(users)">
               <div class="row">
                 <div class="col-6 py-0">
                   <label for="" class="smaller-text">Full Name</label>
@@ -44,7 +45,7 @@
                     <i
                       class="fas fa-user position-absolute mx-2 mt-2 text-primary"
                     ></i>
-                    <input type="text" class="form-control pl-7" :value="`${user.first_name} ${user.last_name}`"/>
+                    <input v-model="fullname" type="text" class="form-control pl-7" />
                   </div>
                 </div>
 
@@ -55,9 +56,9 @@
                       class="fas fa-map-marker-alt position-absolute mx-2 mt-2 text-primary"
                     ></i>
                     <input
+                    v-model="address"
                       type="text"
                       class="form-control pl-7"
-                      :value="user.address"
                     />
                   </div>
                 </div>
@@ -91,7 +92,7 @@
                       <i
                         class="fas fa-envelope position-absolute mx-2 mt-2 text-primary"
                       ></i>
-                      <input type="text" class="form-control pl-7" :value="user.email"/>
+                      <input v-model="email" type="text" class="form-control pl-7" />
                     </div>
                   </div>
 
@@ -102,10 +103,10 @@
                         class="fas fa-phone position-absolute mx-2 mt-2 text-primary"
                       ></i>
                       <input
+                      v-model="phone"
                         type="text"
                         class="form-control pl-7"
                         placeholder="+234"
-                        :value="user.phone"
                       />
                     </div>
                   </div>
@@ -113,38 +114,55 @@
               </div>
 
         <v-card-actions class="d-flex justify-content-center my-12">
-          <button class="btn btn-primary w-25">
+          <button type="submit" class="btn btn-primary w-25">
             Update
           </button>
         </v-card-actions>
             </v-form>
           </div>
         </v-container>
-
-        <!-- <v-card-actions class="d-flex justify-content-center my-12">
-          <button class="btn btn-primary w-25">
-            Update
-          </button>
-        </v-card-actions> -->
       </v-card>
     </v-dialog>
   </div>
 </template>
 
 <script>
-import { mapGetters } from "vuex"
+import { mapGetters, mapActions } from "vuex"
 export default {
   props: [],
   data() {
     return {
       dialog: false,
+      fullname: '',
+      address: '',
+      phone: '',
+      email: '',
     };
   },
 
   computed: {
     ...mapGetters(['user'])
-  
+    
+ 
   },
+
+  methods: {
+    ...mapActions(["updateData"]),
+    updateUser(users){
+      const updatedata = {
+        id: users.id,
+        first_name: this.fullname,
+        email: this.email,
+        phone: this.phone,
+        address: this.address,
+        image_url: users.image_url
+      }
+
+      this.updateData(updatedata);
+      alert('Updated successfully!');
+      this.dialog = false
+    }
+  }
 };
 </script>
 
